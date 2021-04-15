@@ -17,37 +17,47 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
   const [all, setAll] = useState(0)
+  const [sum, setSum] = useState(0)
   const [avg, setAvg] = useState(0)
+  const [goodPerCent, setPerCent] = useState(0)
 
   const goodFeedback = () => {
     setAll(all + 1)
     setGood(good + 1)
-    if (all === 0 ) {
+    setSum(sum +1)
+    if (sum === 0) {
       setAvg(avg + 1)
+      setPerCent(goodPerCent + 100)
     } else {
-      setAvg((avg + 1) / all )
+      setPerCent((good/all)*100)
+      parseFloat(setAvg(sum/all))
     }
   }
 
   const neutralFeedback = () => {
     setAll(all +1)
     setNeutral(neutral +1)
-    if (all === 0 ) {
+    setSum(sum + 0)
+    if (sum === 0) {
       setAvg(avg + 0)
     } else {
-      setAvg((avg + 0) / all )
+      setPerCent((good/all)*100)
+      parseFloat(setAvg(sum/all))
     }
   }
 
   const badFeedback = () => {
     setAll(all +1)
     setBad(bad + 1)
-    if (all === 0 ) {
+    setSum(sum - 1)
+    if (sum === 0) {
       setAvg(avg - 1)
+      setPerCent(goodPerCent - 100)
     } else {
-      setAvg((avg - 1) / all )
+      setPerCent((good/all)*100)
+      parseFloat(setAvg(sum/all))
     }
-  }
+  }  
 
   return (
     <div>
@@ -61,6 +71,7 @@ const App = () => {
       <Display name='Bad' feedbackNum={bad}/>
       <Display name='All' feedbackNum={all}/>
       <Display name='Avg' feedbackNum={avg}/>
+      <Display name='Percentage' feedbackNum={goodPerCent}/>
     </div>
   )
 }
